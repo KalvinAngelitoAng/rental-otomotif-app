@@ -62,7 +62,12 @@ flutter:
   assets:
   # masukkan routes images ke sini 
   # kalo error , dan mau ulang commnentkan imagesnya sama asset 
-  - images/Namafile.png
+    - images/motor_listrik.jpeg
+    - images/motor_matic.jpeg
+    - images/motor_manual.png
+    - images/mobil_matic.png
+    - images/elf.jpeg
+    - images/pickup.jpeg
   
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
