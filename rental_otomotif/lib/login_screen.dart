@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'register_screen.dart'; // ini agar bisa navigasi ke halaman daftar
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -73,7 +74,10 @@ class LoginScreen extends StatelessWidget {
               ),
               TextButton(
                 onPressed: () {
-                  // Navigate to register page
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const RegisterScreen()),
+                  );
                 },
                 child: Text(
                   'Daftar Sekarang',
