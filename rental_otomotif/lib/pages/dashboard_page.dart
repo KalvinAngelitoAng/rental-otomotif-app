@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
-import 'routes.dart';
+import 'package:rental_otomotif/pages/detail_page.dart'; 
 
 class DashboardPage extends StatelessWidget {
   const DashboardPage({Key? key}) : super(key: key);
@@ -10,32 +10,26 @@ class DashboardPage extends StatelessWidget {
     {
       'title': 'Motor Listrik',
       'image': 'images/motor_listrik.jpeg',
-      'route': '/motor_listrik',
     },
     {
       'title': 'Motor Matic',
       'image': 'images/motor_matic.jpeg',
-      'route': '/motor_matic',
     },
     {
       'title': 'Motor Manual',
       'image': 'images/motor_manual.png',
-      'route': '/motor_manual',
     },
     {
       'title': 'Mobil Matic',
-      'image': 'images/mobil_matic.png',   
-      'route': '/mobil_matic',
+      'image': 'images/mobil_matic.png',
     },
     {
       'title': 'Elf',
       'image': 'images/elf.jpeg',
-      'route': '/elf',
     },
     {
       'title': 'Pick Up',
       'image': 'images/pickup.jpeg',
-      'route': '/pickup',
     },
   ];
 
@@ -55,50 +49,56 @@ class DashboardPage extends StatelessWidget {
           crossAxisSpacing: 16,
           mainAxisSpacing: 16,
           children: menuItems.map((item) {
-            return GestureDetector(
-              onTap: () => Navigator.pushNamed(context, item['route']!),
-              child: Card(
-                elevation: 4,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Image.asset(
-                        item['image']!,
-                        height: 80,
-                        fit: BoxFit.contain,
-                        errorBuilder: (_, __, ___) =>
-                            const Icon(Icons.error, size: 80),
+            return Card(
+              elevation: 4,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      item['image']!,
+                      height: 80,
+                      fit: BoxFit.contain,
+                      errorBuilder: (_, __, ___) =>
+                          const Icon(Icons.error, size: 80),
+                    ),
+                    const SizedBox(height: 10),
+                    Text(
+                      item['title']!,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
                       ),
-                      const SizedBox(height: 10),
-                      Text(
-                        item['title']!,
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const SizedBox(height: 8),
-                      ElevatedButton(
-                        onPressed: () =>
-                            Navigator.pushNamed(context, item['route']!),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.blueAccent,
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 16, vertical: 8),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8),
+                    ),
+                    const SizedBox(height: 8),
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => DetailPage(
+                              title: item['title']!,
+                              imagePath: item['image']!,
+                            ),
                           ),
+                        );
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.blueAccent,
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 16, vertical: 8),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
                         ),
-                        child: const Text('Detail'),
                       ),
-                    ],
-                  ),
+                      child: const Text('Detail'),
+                    ),
+                  ],
                 ),
               ),
             );
