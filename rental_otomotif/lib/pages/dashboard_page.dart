@@ -1,49 +1,41 @@
 import 'package:flutter/material.dart';
-
-void main() {
-  runApp(const SewaKendaraanApp());
-}
-
-class SewaKendaraanApp extends StatelessWidget {
-  const SewaKendaraanApp({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Dashboard Sewa Kendaraan',
-      theme: ThemeData(primarySwatch: Colors.blue),
-      home: const DashboardPage(),
-    );
-  }
-}
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'routes.dart';
 
 class DashboardPage extends StatelessWidget {
   const DashboardPage({Key? key}) : super(key: key);
 
+  // DATA MENU
   final List<Map<String, String>> menuItems = const [
     {
       'title': 'Motor Listrik',
-      'image': 'assets/images/motor_listrik.jpeg',
+      'image': 'images/motor_listrik.jpeg',
+      'route': '/motor_listrik',
     },
     {
       'title': 'Motor Matic',
-      'image': 'assets/images/motor_matic.jpeg',
+      'image': 'images/motor_matic.jpeg',
+      'route': '/motor_matic',
     },
     {
       'title': 'Motor Manual',
-      'image': 'assets/images/motor_manual.png',
+      'image': 'images/motor_manual.png',
+      'route': '/motor_manual',
     },
     {
-      'title': 'Mobil Manual',
-      'image': 'assets/images/mobil_manual.png',
+      'title': 'Mobil Matic',
+      'image': 'images/mobil_matic.png',   
+      'route': '/mobil_matic',
     },
     {
       'title': 'Elf',
-      'image': 'assets/images/elf.jpeg',
+      'image': 'images/elf.jpeg',
+      'route': '/elf',
     },
     {
       'title': 'Pick Up',
-      'image': 'assets/images/pickup.jpeg',
+      'image': 'images/pickup.jpeg',
+      'route': '/pickup',
     },
   ];
 
@@ -54,6 +46,8 @@ class DashboardPage extends StatelessWidget {
         title: const Text('Dashboard Sewa Kendaraan'),
         centerTitle: true,
       ),
+
+      // ===== BODY =====
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: GridView.count(
@@ -62,40 +56,73 @@ class DashboardPage extends StatelessWidget {
           mainAxisSpacing: 16,
           children: menuItems.map((item) {
             return GestureDetector(
-              onTap: () {
-                // Navigasi ke halaman detail kendaraan
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text('Klik: ${item['title']}')),
-                );
-              },
+              onTap: () => Navigator.pushNamed(context, item['route']!),
               child: Card(
                 elevation: 4,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
                 ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Image.asset(
-                      item['image']!,
-                      height: 80,
-                      fit: BoxFit.contain,
-                    ),
-                    const SizedBox(height: 10),
-                    Text(
-                      item['title']!,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        item['image']!,
+                        height: 80,
+                        fit: BoxFit.contain,
+                        errorBuilder: (_, __, ___) =>
+                            const Icon(Icons.error, size: 80),
                       ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ],
+                      const SizedBox(height: 10),
+                      Text(
+                        item['title']!,
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      ElevatedButton(
+                        onPressed: () =>
+                            Navigator.pushNamed(context, item['route']!),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.blueAccent,
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 16, vertical: 8),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                        ),
+                        child: const Text('Detail'),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             );
           }).toList(),
         ),
+      ),
+
+      // ===== FLOATING‑ACTION BUTTON GANDA =====
+      floatingActionButton: SpeedDial(
+        animatedIcon: AnimatedIcons.menu_close,
+        backgroundColor: Colors.blueAccent,
+        overlayOpacity: 0.1,
+        children: [
+          SpeedDialChild(
+            child: const Icon(Icons.person),
+            label: 'Profil',
+            onTap: () => Navigator.pushNamed(context, '/profile_page'),
+          ),
+          SpeedDialChild(
+            child: const Icon(Icons.shopping_cart),
+            label: 'Booking',
+            onTap: () => Navigator.pushNamed(context, '/booking_form_page'),
+          ),
+        ],
       ),
     );
   }
